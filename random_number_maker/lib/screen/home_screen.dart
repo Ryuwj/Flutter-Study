@@ -1,23 +1,27 @@
 // import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:cp949/cp949.dart' as cp949;
 import 'dart:math';
 import 'package:random_number_maker/const/color.dart';
 import 'package:random_number_maker/screen/setting_screen.dart';
+import 'package:random_number_maker/state/state_manage.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int maxNumber = 1000;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late final maxNumber = ref.watch(maxNumberProvider);
   List<int> randomNumber = [123, 456, 789];
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Color(0xFF2D2D33),
       appBar: _TopAppBar(settingPressed: settingPressed),
@@ -64,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // 문제점 : 값을 받아오면 상관이 없으나,
         // 값을 못 받아 오면은 문제가 있음
         // 저장을 누르면 값을 받아오나 그냥 뒤로가기 해버리면 result가 null로 들어감
-        maxNumber = result;
+
       });
     }
   }
